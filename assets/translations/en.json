@@ -1,3 +1,10 @@
 {
-    "overtimePay":"Overtime pay"
+    "overtimePay":"Overtime pay",
+    "downtimePay":"Downtime pay",
+    "hireCost":"Hire cost",
+    "fireCost":"Fire cost",
+    "requirementsLen":"Periods count",
+    "requirement":"Need №",
+    "error_parsing":"Form pasring error",
+    "buildTables":"Build tables"
 }

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:ultimate_calc/input_page.dart';
+import 'package:ultimate_calc/input_page/input_page.dart';
 import 'package:easy_localization/easy_localization.dart';
 
 Future<void> main() async {
@@ -31,7 +31,7 @@ class MyApp extends StatelessWidget {
       localizationsDelegates: context.localizationDelegates,
       supportedLocales: context.supportedLocales,
       locale: context.locale,
-      home: const InputPage(),
+      home: InputPage(),
     );
   }
 }
