@@ -1,6 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:ultimate_calc/calc_page.dart';
+import 'package:ultimate_calc/calc_page/calc_page.dart';
 import 'package:ultimate_calc/core/calculation.dart';
 
 class InputPage extends StatelessWidget {
@@ -23,77 +23,120 @@ class InputPage extends StatelessWidget {
           child: ConstrainedBox(
             constraints: const BoxConstraints(maxWidth: 640),
             child: Column(
+              mainAxisSize: MainAxisSize.min,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                InputField(
-                  title: 'overtimePay'.tr(),
-                  controller: overtimePayController,
-                ),
-                InputField(
-                  title: 'downtimePay'.tr(),
-                  controller: downtimePayController,
-                ),
-                InputField(
-                  title: 'hireCost'.tr(),
-                  controller: hireCostController,
-                ),
-                InputField(
-                  title: 'fireCost'.tr(),
-                  controller: fireCostController,
-                ),
-                SizedBox(height: 24),
                 Flexible(
-                  child: StatefulBuilder(
-                    builder: (localContext, localSetState) {
-                      requirementsLenController.addListener(
-                        () {
-                          int? a = int.tryParse(requirementsLenController.text);
-                          if (a != null) {
-                            localSetState(() {
-                              int diff =
-                                  (requirementsControllersList.length - a)
-                                      .abs();
+                  child: ListView(
+                    shrinkWrap: true,
+                    children: [
+                      InputField(
+                        title: 'overtimePay'.tr(),
+                        controller: overtimePayController,
+                      ),
+                      InputField(
+                        title: 'downtimePay'.tr(),
+                        controller: downtimePayController,
+                      ),
+                      InputField(
+                        title: 'hireCost'.tr(),
+                        controller: hireCostController,
+                      ),
+                      InputField(
+                        title: 'fireCost'.tr(),
+                        controller: fireCostController,
+                      ),
+                      SizedBox(height: 24),
+                      StatefulBuilder(
+                        builder: (localContext, localSetState) {
+                          requirementsLenController.addListener(
+                            () {
+                              int? a =
+                                  int.tryParse(requirementsLenController.text);
+                              if (a != null) {
+                                localSetState(() {
+                                  int diff =
+                                      (requirementsControllersList.length - a)
+                                          .abs();
 
-                              if (a > requirementsControllersList.length) {
-                                for (var i = 0; i < diff; ++i) {
-                                  requirementsControllersList
-                                      .add(TextEditingController());
-                                }
-                              } else if (a <
-                                  requirementsControllersList.length) {
-                                for (var i = 0; i < diff; ++i) {
-                                  requirementsControllersList.removeLast();
-                                }
+                                  if (a > requirementsControllersList.length) {
+                                    for (var i = 0; i < diff; ++i) {
+                                      requirementsControllersList
+                                          .add(TextEditingController());
+                                    }
+                                  } else if (a <
+                                      requirementsControllersList.length) {
+                                    for (var i = 0; i < diff; ++i) {
+                                      requirementsControllersList.removeLast();
+                                    }
+                                  }
+                                });
                               }
-                            });
-                          }
-                        },
-                      );
-                      // localSetState();
-                      return Column(
-                        children: [
-                          InputField(
-                            title: 'requirementsLen'.tr(),
-                            controller: requirementsLenController,
-                          ),
-                          Flexible(
-                            child: ListView.builder(
-                              shrinkWrap: true,
-                              physics: const NeverScrollableScrollPhysics(),
-                              itemCount: requirementsControllersList.length,
-                              itemBuilder: (context, index) => InputField(
-                                title:
-                                    'requirement'.tr() + ' ' + index.toString(),
-                                controller: requirementsControllersList[index],
+                            },
+                          );
+                          // localSetState();
+                          return Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              InputField(
+                                title: 'requirementsLen'.tr(),
+                                controller: requirementsLenController,
                               ),
-                            ),
-                          ),
-                        ],
-                      );
-                    },
+                              Flexible(
+                                child: ListView.builder(
+                                  shrinkWrap: true,
+                                  physics: const NeverScrollableScrollPhysics(),
+                                  itemCount: requirementsControllersList.length,
+                                  itemBuilder: (context, index) => InputField(
+                                    title: 'requirement'.tr() +
+                                        ' ' +
+                                        index.toString(),
+                                    controller:
+                                        requirementsControllersList[index],
+                                  ),
+                                ),
+                              ),
+                            ],
+                          );
+                        },
+                      ),
+                    ],
                   ),
                 ),
-                SizedBox(height: 48),
+                SizedBox(height: 24),
+                ElevatedButton(
+                  onPressed: () {
+                    overtimePayController.text = '29';
+                    downtimePayController.text = '10';
+                    hireCostController.text = '18';
+                    fireCostController.text = '9';
+                    requirementsLenController.text = '8';
+                    Future.delayed(Duration(seconds: 1), () {
+                      try {
+                        requirementsControllersList[0].text = '5';
+                        requirementsControllersList[1].text = '6';
+                        requirementsControllersList[2].text = '14';
+                        requirementsControllersList[3].text = '17';
+                        requirementsControllersList[4].text = '5';
+                        requirementsControllersList[5].text = '13';
+                        requirementsControllersList[6].text = '17';
+                        requirementsControllersList[7].text = '7';
+                      } catch (e) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text('error_changed_defaults'.tr()),
+                          ),
+                        );
+                      }
+                    });
+                    // Future.d
+                  },
+                  child: Text(
+                    'setDefaults'.tr(),
+                    style: const TextStyle(fontSize: 16),
+                  ),
+                ),
+                SizedBox(height: 12),
                 ElevatedButton(
                   onPressed: () {
                     final tables = validateTables();
@@ -101,7 +144,7 @@ class InputPage extends StatelessWidget {
                         ? Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (_) => CalcPage(tables: tables),
+                              builder: (_) => CalcPage(tablesInfo: tables),
                             ),
                           )
                         : ScaffoldMessenger.of(context).showSnackBar(
@@ -123,7 +166,7 @@ class InputPage extends StatelessWidget {
     );
   }
 
-  Tables? validateTables() {
+  CalcDTO? validateTables() {
     final requirements = <int>[];
     for (var req in requirementsControllersList) {
       final value = int.tryParse(req.text);
@@ -145,7 +188,7 @@ class InputPage extends StatelessWidget {
     final hireCost = int.tryParse(hireCostController.text);
     if (hireCost == null) return null;
 
-    return Tables(
+    return CalcDTO(
       requirements: requirements,
       overtimePay: overtimePay,
       downtimePay: downtimePay,
