@@ -4,6 +4,7 @@ import 'package:ultimate_calc/calc_page/calc_page.dart';
 import 'package:ultimate_calc/core/calculation.dart';
 
 class InputPage extends StatelessWidget {
+  final minWorkersController = TextEditingController();
   final overtimePayController = TextEditingController();
   final downtimePayController = TextEditingController();
   final hireCostController = TextEditingController();
@@ -19,7 +20,8 @@ class InputPage extends StatelessWidget {
     return Scaffold(
       body: Center(
         child: Padding(
-          padding: EdgeInsets.only(left: 16, right: 16, top: 24, bottom: 24),
+          padding:
+              const EdgeInsets.only(left: 16, right: 16, top: 24, bottom: 24),
           child: ConstrainedBox(
             constraints: const BoxConstraints(maxWidth: 640),
             child: Column(
@@ -30,6 +32,10 @@ class InputPage extends StatelessWidget {
                   child: ListView(
                     shrinkWrap: true,
                     children: [
+                      InputField(
+                        title: 'minWorkers'.tr(),
+                        controller: minWorkersController,
+                      ),
                       InputField(
                         title: 'overtimePay'.tr(),
                         controller: overtimePayController,
@@ -106,6 +112,7 @@ class InputPage extends StatelessWidget {
                 SizedBox(height: 24),
                 ElevatedButton(
                   onPressed: () {
+                    minWorkersController.text = '3';
                     overtimePayController.text = '29';
                     downtimePayController.text = '10';
                     hireCostController.text = '18';
@@ -176,6 +183,9 @@ class InputPage extends StatelessWidget {
       requirements.add(value);
     }
 
+    final minWorkers = int.tryParse(minWorkersController.text);
+    if (minWorkers == null) return null;
+
     final overtimePay = int.tryParse(overtimePayController.text);
     if (overtimePay == null) return null;
 
@@ -189,6 +199,7 @@ class InputPage extends StatelessWidget {
     if (hireCost == null) return null;
 
     return CalcDTO(
+      minWorkers: minWorkers,
       requirements: requirements,
       overtimePay: overtimePay,
       downtimePay: downtimePay,

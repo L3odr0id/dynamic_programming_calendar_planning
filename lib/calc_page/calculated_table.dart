@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:ultimate_calc/core/calculation.dart';
 
@@ -19,7 +20,12 @@ class CalculatedTableWidget extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Text('Table ${table.logicalStep}. requirement=${table.currentReq}'),
+            Text(
+              'step'.tr() +
+                  ' ${table.logicalStep}. ' +
+                  'req'.tr() +
+                  ' ${table.currentReq}',
+            ),
             Row(
               children: [
                 CTcellW(

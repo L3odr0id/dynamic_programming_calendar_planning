@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:ultimate_calc/core/bellman_equation.dart';
 import 'package:ultimate_calc/core/path.dart';
 
@@ -10,14 +12,16 @@ class CalcDTO {
   final int hireCost;
   final int fireCost;
 
+  final int minWorkers;
+
   int get minRequirement {
-    int min = requirements.first;
+    int minV = requirements.first;
     for (var i in requirements) {
-      if (i < min) {
-        min = i;
+      if (i < minV) {
+        minV = i;
       }
     }
-    return min;
+    return min(minV, minWorkers);
   }
 
   int get maxRequirement {
@@ -31,6 +35,7 @@ class CalcDTO {
   }
 
   const CalcDTO({
+    required this.minWorkers,
     required this.requirements,
     required this.overtimePay,
     required this.downtimePay,
@@ -69,7 +74,7 @@ class CalculatedTable {
     required int currentReq,
     required CalculatedTable? prevTable,
   }) {
-    return BellmanEquation(
+    final bellman = BellmanEquation(
       nextStepValue: calcNext(colIndex, dto),
       currentStepValue: calcCurrent(rowIndex, dto),
       requiredValue: currentReq,
@@ -78,7 +83,10 @@ class CalculatedTable {
       downtimePay: dto.downtimePay,
       fireCost: dto.fireCost,
       hireCost: dto.hireCost,
-    ).result;
+    );
+    // print(
+    //     'table ${prevTable?.logicalStep} row=$rowIndex col=$colIndex res=${bellman.result} fireHire=${bellman.fireHireCost} overDown=${bellman.overtimeDowntimePay} nextHaveDiff=${bellman.nextHaveDiff} nextReqDiff=${bellman.nextRequiredDiff}');
+    return bellman.result;
   }
 
   static Iterable<int> genCollsInRow({
@@ -150,11 +158,27 @@ class CalculatedTable {
       }
       mins.add(min);
     }
-    if (prevTable == null) {
-      globalMin = _gm;
-    } else {
-      globalMin = prevTable.findMinForRow(prevTable.globalMin.rowIndex);
+    globalMin = _gm;
+  }
+
+  PathPart findMinForCol(int colIndex) {
+    PathPart min = PathPart(
+      value: cells.first.elementAt(colIndex),
+      step: logicalStep,
+      colIndex: colIndex,
+      rowIndex: 0,
+    );
+    for (int i = 0; i < cells.length; ++i) {
+      if (cells.elementAt(i).elementAt(colIndex) < min.value) {
+        min = PathPart(
+          value: cells.elementAt(i).elementAt(colIndex),
+          step: logicalStep,
+          colIndex: colIndex,
+          rowIndex: i,
+        );
+      }
     }
+    return min;
   }
 }
 
@@ -180,8 +204,6 @@ class CalculationResult {
       );
     }
 
-    print(tablesDTO.minRequirement);
-    print(tablesDTO.maxRequirement);
     return CalculationResult._(tables: tables);
   }
 }
