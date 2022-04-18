@@ -6,5 +6,8 @@
     "requirementsLen":"Periods count",
     "requirement":"Need №",
     "error_parsing":"Form pasring error",
-    "buildTables":"Build tables"
+    "buildTables":"Build tables",
+    "setDefaults":"Set default values",
+    "error_changed_defaults":"You edited the values during the default installation",
+    "buildTime":"Build time:"
 }
