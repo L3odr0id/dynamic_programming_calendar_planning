@@ -29,3 +29,5 @@
 
 Этот пример кажется очевидным, но рассмотрим второй день для этого же тестового варианта. Требуется всего 6 рабочих, но наиболее эффективная стратегия - это стартовать с 14 рабочих. Впрочем, если у вас уже есть 6 рабочих, выгоднее никого не нанимать.
 ![](https://github.com/L3odr0id/dynamic_programming_calendar_planning/blob/master/explanation2.png)
+
+![visitors](https://visitor-badge.glitch.me/badge?page_id=l3odr0id.dynamic_programming_calendar_planning) <!-- set 07.08.2022 -->
