@@ -32,4 +32,5 @@ https://l3odr0id.github.io/dynamic_programming_calendar_planning/
 Этот пример кажется очевидным, но рассмотрим второй день для этого же тестового варианта. Требуется всего 6 рабочих, но наиболее эффективная стратегия - это стартовать с 14 рабочих. Впрочем, если у вас уже есть 6 рабочих, выгоднее никого не нанимать. А если у вас в команде менее 6 рабочих, выгоднее всего нанять недостающих.
 ![](https://github.com/L3odr0id/dynamic_programming_calendar_planning/blob/master/explanation2.png)
 
-![visitors](https://visitor-badge.glitch.me/badge?page_id=l3odr0id.dynamic_programming_calendar_planning) <!-- set 07.08.2022 -->
+<!-- ![visitors](https://visitor-badge.glitch.me/badge?page_id=l3odr0id.dynamic_programming_calendar_planning) <!-- set 07.08.2022 -->
+![visitors](https://visitor-badge.laobi.icu/badge?page_id=l3odr0id.dynamic_programming_calendar_planning) <!-- set 03.10.2023 -->
